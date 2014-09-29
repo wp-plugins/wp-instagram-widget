@@ -3,7 +3,7 @@
 Plugin Name: WP Instagram Widget
 Plugin URI: https://github.com/cftp/wp-instagram-widget
 Description: A WordPress widget for showing your latest Instagram photos
-Version: 1.3
+Version: 1.3.1
 Author: Scott Evans (Code For The People)
 Author URI: http://codeforthepeople.com
 Text Domain: wpiw
@@ -134,7 +134,7 @@ class null_instagram_widget extends WP_Widget {
 			?><p class="clear"><a href="//instagram.com/<?php echo trim($username); ?>" rel="me" target="<?php echo esc_attr( $target ); ?>"><?php echo $link; ?></a></p><?php
 		}
 
-		do_action( 'wpiw_before_widget', $instance );
+		do_action( 'wpiw_after_widget', $instance );
 
 		echo $after_widget;
 	}
@@ -181,6 +181,8 @@ class null_instagram_widget extends WP_Widget {
 
 	// based on https://gist.github.com/cosmocatalano/4544576
 	function scrape_instagram($username, $slice = 9) {
+
+		$username = strtolower($username);
 
 		if (false === ($instagram = get_transient('instagram-media-'.sanitize_title_with_dashes($username)))) {
 
